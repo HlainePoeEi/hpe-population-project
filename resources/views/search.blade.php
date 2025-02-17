@@ -3,13 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Search</title>
+    <!-- Include CSS for alert styling -->
+    <style>
+        .alert {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: white;
+            background-color: red;
+            text-align: center;
+            width: 50%;
+            max-width: 400px; 
+            border-radius: 5px; 
+        }
+    </style>
 </head>
 <body>
     <h1>Search Population Data</h1>
-
+        <!-- Display error message only when an error exists -->
+    @if(isset($error))
+        <div class="alert">
+            {{ $error }}
+        </div>
+    @endif
     <form action="{{ route('search') }}" method="get">
         <select name="prefecture">
-            <option>Total</option>
             <option>全　国</option>
             <option>01 北海道</option>
             <option>02 青森県</option>
@@ -59,7 +76,6 @@
             <option>46 鹿児島県</option>
             <option>47 沖縄県</option>
         </select>
-
         <select name="year">
             <option>1935</option>
             <option>1947</option>
@@ -87,11 +103,13 @@
             <option>2020</option>
             <option>2021</option>
             <option>2022</option>
+            <option>2025</option>
         </select>
         <button type="submit">Get population</button>
     </form>
-        @if($population)
-        <h3>Population Data for {{ $prefecture }} - Year {{ $year }}</h3>
+    <!-- Show table only if population data exists -->
+    @if(isset($population))
+    <h3>Population Data for {{ $prefecture }} - Year {{ $year }}</h3>
         <table border="1">
             <thead>
                 <tr>
@@ -108,6 +126,6 @@
                 </tr>
             </tbody>
         </table>
-        @endif
+    @endif
 </body>
 </html>

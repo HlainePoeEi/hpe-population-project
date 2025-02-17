@@ -12,16 +12,14 @@ class PopulationController extends Controller
         $prefecture = $request->input('prefecture');
         $year = $request->input('year');
         
-        // Fetch the population data based on selected prefecture and year
-        if ($prefecture !== 'Total' && $prefecture !== '全　国') {
-            $population = Population::where('prefecture', $prefecture)
-                ->where('year', $year)
-                ->first();
-        } else {
-            // For 'Total' or '全　国', get the sum of all prefectures for the selected year
-            $population = Population::where('year', $year)
-                ->selectRaw('SUM(total_population) as total_population')
-                ->first();
+        $population = Population::where('prefecture', $prefecture)
+                             ->where('year', $year)
+                             ->first();
+
+        if (!$population) {
+            // Return the view with an error message
+            return view('search', compact('prefecture', 'year'))
+                   ->with('error', 'No data !!!');
         }
 
         return view('search', compact('population', 'prefecture', 'year'));
