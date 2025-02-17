@@ -90,8 +90,7 @@
         </select>
         <button type="submit">Get population</button>
     </form>
-
-
+        @if($population)
         <h3>Population Data for {{ $prefecture }} - Year {{ $year }}</h3>
         <table border="1">
             <thead>
@@ -109,5 +108,6 @@
                 </tr>
             </tbody>
         </table>
+        @endif
 </body>
 </html>
